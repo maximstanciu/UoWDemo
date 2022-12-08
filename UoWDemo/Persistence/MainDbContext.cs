@@ -12,7 +12,7 @@ namespace UoWDemo.Persistence
 
 		public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
 		{
-			foreach (var item in ChangeTracker.Entries<AggregateRoot>().AsEnumerable())
+			foreach (var item in ChangeTracker.Entries<IEntity>().AsEnumerable())
 			{
 				//Auto Timestamp
 				item.Entity.CreatedAt = DateTime.Now;
@@ -23,7 +23,7 @@ namespace UoWDemo.Persistence
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlite("DataSource=MainDb.db");
+			
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,4 +33,3 @@ namespace UoWDemo.Persistence
         }
 	}
 }
-
