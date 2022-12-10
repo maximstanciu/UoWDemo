@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Principal;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 namespace UoWDemo.Entities
 {
 	public record Address : IEntity

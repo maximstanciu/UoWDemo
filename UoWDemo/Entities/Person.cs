@@ -2,9 +2,9 @@
 {
     public record Person : IEntity
 	{
-		public string FirstName { get; set; }
-		public string LastName { get; set; }
+		public string FirstName { get; init; }
+		public string LastName { get; init; }
 
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Address> Addresses { get; init; }
     }
 }
