@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using UoWDemo.Persistence;
 using UoWDemo.Repositories;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<MainDbContext>(options =>
 builder.Services.AddScoped<IMainDbContext, MainDbContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

@@ -23,9 +23,9 @@ namespace UoWDemo.Repositories
             return new Repository(_databaseContext);
         }
 
-        public async Task<int> CommitAsync(CancellationToken cancellationToken)
+        public Task<int> CommitAsync(CancellationToken cancellationToken)
         {
-            return await _databaseContext.SaveChangesAsync(cancellationToken);
+            return _databaseContext.SaveChangesAsync(cancellationToken);
         }
 
         ~UnitOfWork()
