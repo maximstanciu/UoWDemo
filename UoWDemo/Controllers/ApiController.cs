@@ -32,6 +32,7 @@ namespace UoWDemo.Controllers
                 ErrorType.NotFound => StatusCodes.Status404NotFound,
                 _ => StatusCodes.Status500InternalServerError
             };
+
             return Problem(statusCode: statusCode, title: firstError.Description);
         }
     }

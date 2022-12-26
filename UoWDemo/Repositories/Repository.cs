@@ -26,24 +26,30 @@ namespace UoWDemo.Repositories
             return orderBy != null ? orderBy(query) : query;
         }
 
-        public async Task<IEnumerable<T>> FindEnumerableAsync<T>(CancellationToken cancellationToken,
-            Expression<Func<T, bool>>? expression, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null)
-            where T : IEntity
+        public Task<List<T>> FindListAsync<T>(Expression<Func<T, bool>>? expression, Func<IQueryable<T>, 
+            IOrderedQueryable<T>>? orderBy = null, CancellationToken cancellationToken = default)
+            where T : class
         {
             var query = expression != null ? _dbContext.Set<T>().Where(expression) : _dbContext.Set<T>();
             return orderBy != null
-                ? await orderBy(query).ToListAsync(cancellationToken)
-                : await query.ToListAsync(cancellationToken);
+                ? orderBy(query).ToListAsync(cancellationToken)
+                : query.ToListAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<T>> FindAllAsync<T>(CancellationToken cancellationToken) where T : IEntity
+        public Task<List<T>> FindAllAsync<T>(CancellationToken cancellationToken) where T : IEntity
         {
-            return await _dbContext.Set<T>().ToListAsync(cancellationToken);
+            return _dbContext.Set<T>().ToListAsync(cancellationToken);
         }
 
-        public async Task<T?> SingleOrDefaultAsync<T>(Expression<Func<T, bool>> expression) where T : IEntity
+        public Task<T?> SingleOrDefaultAsync<T>(Expression<Func<T, bool>> expression, string includeProperties) where T : IEntity
         {
-            return await _dbContext.Set<T>().SingleOrDefaultAsync(expression);
+            var query = _dbContext.Set<T>().AsQueryable();
+
+            query = includeProperties.Split(new char[] { ',' }, 
+                StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) 
+                => current.Include(includeProperty));
+
+            return query.SingleOrDefaultAsync(expression);
         }
 
         public T Add<T>(T entity) where T : IEntity

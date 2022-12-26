@@ -16,11 +16,6 @@ namespace UoWDemo.Controllers
             _mediator = mediator;
         }
 
-        /// <summary>
-        /// Returns the Person by its Id
-        /// </summary>
-        /// <param name="id">Id</param>
-        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesErrorResponseType(typeof(ErrorOr.ErrorOr))]
