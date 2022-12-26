@@ -32,7 +32,7 @@ namespace UoWDemo.Handlers.Queries
         {
             var employee = await _uow.Repository().GetById<Person>(request.Id);
             if (employee is null)
-                throw new Exception("Person not found");
+                return Error.NotFound(code: "Person not found", description:"Please enter the existing Person Id" );
 
             return _mapper.Map<PersonResource>(employee);
         }
