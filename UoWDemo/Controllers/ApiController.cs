@@ -19,7 +19,7 @@ namespace UoWDemo.Controllers
                 {
                     modelStateDict.AddModelError(error.Code, error.Description);
                 }
-                return ValidationProblem();
+                return ValidationProblem(modelStateDict);
             }
 
             HttpContext.Items["errors"] = errors;

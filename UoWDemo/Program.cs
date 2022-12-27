@@ -4,6 +4,8 @@ using UoWDemo.Persistence;
 using UoWDemo.Repositories;
 using MediatR;
 using UoWDemo.Behavior;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using UoWDemo.Errors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +25,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
+builder.Services.AddSingleton<ProblemDetailsFactory, UoWDemoProblemDetailsFactory>();
 
 var app = builder.Build();
 
