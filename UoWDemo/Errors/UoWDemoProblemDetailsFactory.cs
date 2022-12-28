@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using ErrorOr;
 
 namespace UoWDemo.Errors
 {
@@ -80,10 +81,9 @@ namespace UoWDemo.Errors
                 problemDetails.Extensions["traceId"] = traceId;
             }
 
-            var errors = httpContext!.Items["errors"] as List<ErrorOr.Error>;
-            if (errors != null)
+            if (httpContext!.Items["errors"] is List<Error> errors)
             {
-                problemDetails.Extensions.Add("errors", errors.Select(e => "ERC" + e.Code));
+                problemDetails.Extensions.Add("errors", errors.Select(e => e.Code));
             }
         }
     }

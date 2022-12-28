@@ -16,6 +16,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddControllers(opt => opt.Filters.Add<UoWDemoExceptionHandlerAttribute>());
+
 builder.Services.AddDbContext<MainDbContext>(options =>
   options.UseSqlite(builder.Configuration.GetConnectionString("MainConnectionString"))
 );
@@ -26,6 +28,7 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddSingleton<ProblemDetailsFactory, UoWDemoProblemDetailsFactory>();
+
 
 var app = builder.Build();
 
