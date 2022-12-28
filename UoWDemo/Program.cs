@@ -16,7 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddControllers(opt => opt.Filters.Add<UoWDemoExceptionHandlerAttribute>());
+builder.Services.AddControllers(opt => opt.Filters.Add<UoWDemoExceptionHandlerAttribute>());
 
 builder.Services.AddDbContext<MainDbContext>(options =>
   options.UseSqlite(builder.Configuration.GetConnectionString("MainConnectionString"))
